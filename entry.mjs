@@ -3,7 +3,7 @@ const button = document.querySelector('#open'), retry = document.querySelector('
 async function connect() {
   retry.hidden = true; button.hidden = true; status.textContent = '正在查找你的 Pi…';
   const stamp = Date.now(); let connection;
-  for (const endpoint of [`https://raw.githubusercontent.com/${repository}/connection/connection.json?t=${stamp}`, `https://api.github.com/repos/${repository}/contents/connection.json?ref=connection&t=${stamp}`]) {
+  for (const endpoint of [`https://api.github.com/repos/${repository}/contents/connection.json?ref=connection&t=${stamp}`, `https://raw.githubusercontent.com/${repository}/connection/connection.json?t=${stamp}`]) {
     try { const r = await fetch(endpoint, { cache: 'no-store', headers: { Accept: 'application/vnd.github.raw+json' }, signal: AbortSignal.timeout(8000), credentials: 'omit' }); if (!r.ok) throw new Error(); connection = await r.json(); break; } catch {}
   }
   try {
